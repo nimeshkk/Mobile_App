@@ -18,7 +18,7 @@ class _WelcomePageState extends State<WelcomePage> {
         children: [
           Center(
             child: Image.asset(
-              'assets/welcome.png',
+              'assets/B.png',
               width: 300,
               height: 300,
             ),
@@ -37,7 +37,7 @@ class _WelcomePageState extends State<WelcomePage> {
             width: 220.0,
             child: Center(
               child: Text(
-                'Before enjoying DiahnnoMe services ',
+                'Before enjoying  services ',
                 style: TextStyle(
                   fontSize: 12.0,
                   color: const Color.fromARGB(255, 0, 0, 0),
