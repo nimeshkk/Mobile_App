@@ -1,3 +1,5 @@
+import 'package:app/signIn.dart';
+import 'package:app/signup.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -60,15 +62,19 @@ class _WelcomePageState extends State<WelcomePage> {
           SizedBox(height: 100.0),
           ElevatedButton(
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => SignUpPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignUpPage()),
+              );
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              minimumSize: Size(300.0, 50.0),
-            ),
+            style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(
+                          Size(300, 50)), 
+                      backgroundColor: MaterialStateProperty.all(
+                          Colors.blue), 
+                      foregroundColor:
+                          MaterialStateProperty.all(Colors.white), 
+                    ),
             child: Text(
               'Sign Up',
               style: TextStyle(
@@ -79,20 +85,24 @@ class _WelcomePageState extends State<WelcomePage> {
           SizedBox(height: 10.0),
           ElevatedButton(
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => LoginPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignInPage()),
+              );
               
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 194, 232, 195),
-              minimumSize: Size(300.0, 50.0),
-            ),
+            style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(
+                          Size(300, 50)), 
+                      backgroundColor: MaterialStateProperty.all(
+                          Colors.blue), 
+                      foregroundColor:
+                          MaterialStateProperty.all(Colors.white), 
+                    ),
             child: Text(
               'Login',
               style: TextStyle(
-                color: Color.fromARGB(255, 1, 148, 53),
+                color: Color.fromARGB(255, 255, 255, 255),
               ),
             ),
           ),
