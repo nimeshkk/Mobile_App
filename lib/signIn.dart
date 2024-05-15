@@ -11,7 +11,7 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _email= TextEditingController();
+  final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
   signInWithEmailAndPassword() async {
@@ -23,9 +23,8 @@ class _SignInPageState extends State<SignInPage> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>WelcomePage()),
+        MaterialPageRoute(builder: (context) => WelcomePage()),
       );
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -39,6 +38,13 @@ class _SignInPageState extends State<SignInPage> {
     if (value == null || value.isEmpty) {
       return 'Email is required';
     }
+
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+    if (!emailRegex.hasMatch(value)) {
+      return 'Invalid email address';
+    }
+
     return null;
   }
 
@@ -52,11 +58,13 @@ class _SignInPageState extends State<SignInPage> {
     return null;
   }
 
+  bool _obscureText = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign In'),
+        title: const Text(''),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -73,7 +81,8 @@ class _SignInPageState extends State<SignInPage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
                   'assets/B.png',
@@ -106,7 +115,7 @@ class _SignInPageState extends State<SignInPage> {
                 TextFormField(
                   controller: _password,
                   validator: _validatePassword,
-                  obscureText: true,
+                  obscureText: _obscureText,
                   decoration: InputDecoration(
                     hintText: 'Password',
                     border: OutlineInputBorder(
@@ -114,6 +123,16 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     contentPadding:
                         const EdgeInsets.symmetric(horizontal: 10.0),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                      child: Icon(
+                        _obscureText ? Icons.visibility_off : Icons.visibility,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
