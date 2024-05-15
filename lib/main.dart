@@ -1,8 +1,19 @@
 import 'package:app/welcome.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    runApp(const MyApp());
+  } catch (e) {
+    print('Error initializing Firebase: $e');
+   
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +30,7 @@ class MyApp extends StatelessWidget {
 
         useMaterial3: true,
       ),
-      home: WelcomePage(),
+      home: const WelcomePage(),
     );
   }
 }
