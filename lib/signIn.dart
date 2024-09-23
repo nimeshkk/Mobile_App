@@ -1,3 +1,4 @@
+import 'package:app/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app/welcome.dart';
@@ -23,7 +24,7 @@ class _SignInPageState extends State<SignInPage> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => WelcomePage()),
+        MaterialPageRoute(builder: (context) => MyHomePage()),
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
