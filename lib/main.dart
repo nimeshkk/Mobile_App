@@ -1,5 +1,5 @@
 import 'package:app/home.dart';
-import 'package:app/welcome.dart';
+import 'package:app/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
 
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: SignUpPage(),
     );
   }
 }
