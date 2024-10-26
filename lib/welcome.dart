@@ -25,9 +25,9 @@ class _WelcomePageState extends State<WelcomePage> {
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color.fromARGB(255, 180, 218, 250), Color.fromARGB(255, 45, 111, 186)],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+                colors: [Color.fromARGB(255, 166, 216, 255), Color.fromARGB(255, 255, 255, 255)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
             ),
           ),
@@ -50,7 +50,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   style: TextStyle(
                     fontSize: 32.0,
                     fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 0, 0, 0),
                   ),
                 ),
                 const SizedBox(height: 10.0),
@@ -62,12 +62,12 @@ class _WelcomePageState extends State<WelcomePage> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16.0,
-                        color: Colors.white70,
+                        color: Color.fromARGB(179, 0, 0, 0),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 100.0),
+                const SizedBox(height: 150.0),
                 
                 SizedBox(
                   width: 300, 
@@ -129,7 +129,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 12.0,
-                        color: Colors.white70,
+                        color: Color.fromARGB(179, 0, 0, 0),
                       ),
                     ),
                   ),

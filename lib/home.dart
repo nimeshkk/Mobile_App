@@ -10,14 +10,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 2;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -46,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
       ),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color(0xFFFFFFFF),
       body: Column(
         children: [
           const SizedBox(height: 20.0),
@@ -69,7 +61,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   return Container(
                     width: screenWidth,
                     margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                   
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.asset(i, fit: BoxFit.cover),
@@ -84,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
               children: [
-                Text(
+                const Text(
                   'Emergency Services',
                   style: TextStyle(
                     fontSize: 22,
@@ -136,9 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomTab(
-        selectedIndex: _selectedIndex,
-      ),
+      bottomNavigationBar: BottomTab(), // Calls BottomTab without selectedIndex
     );
   }
 
@@ -192,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 const SizedBox(height: 15),
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                     color: Color(0xFF2C3E50),
