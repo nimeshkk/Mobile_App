@@ -1,5 +1,6 @@
 import 'package:app/home.dart';
 import 'package:app/notification_service.dart';
+import 'package:app/signIn.dart';
 import 'package:app/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: SignInPage(),
       
     );
   }

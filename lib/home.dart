@@ -127,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomTab(), // Calls BottomTab without selectedIndex
+      bottomNavigationBar: BottomTab(), 
     );
   }
 
