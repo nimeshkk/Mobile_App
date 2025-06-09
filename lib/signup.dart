@@ -3,8 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'welcome.dart'; // Adjust the import according to your file structure
 import 'signIn.dart'; // Adjust the import according to your file structure
 
+
+
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+  static var page;
+
+  const SignUpPage({super.key});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();

@@ -7,9 +7,9 @@ class BottomTab extends StatefulWidget {
   final int initialIndex;
   
   const BottomTab({
-    Key? key,
+    super.key,
     this.initialIndex = 0,
-  }) : super(key: key);
+  });
 
   @override
   State<BottomTab> createState() => _BottomTabState();
@@ -33,7 +33,7 @@ class _BottomTabState extends State<BottomTab> {
       // Navigation logic based on selected index
       switch (index) {
         case 0:
-          if (!(context.widget is MyHomePage)) {
+          if (context.widget is! MyHomePage) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const MyHomePage()),
@@ -41,7 +41,7 @@ class _BottomTabState extends State<BottomTab> {
           }
           break;
         case 1:
-          if (!(context.widget is Report_disater)) {
+          if (context.widget is! Report_disater) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const Report_disater()),

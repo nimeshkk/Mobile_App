@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app/welcome.dart';
 
+
 class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key}) : super(key: key);
+  static var page;
+
+  const SignInPage({super.key});
 
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -50,7 +53,7 @@ class _SignInPageState extends State<SignInPage> with SingleTickerProviderStateM
       );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MyHomePage()),
+        MaterialPageRoute(builder: (context) => const MyHomePage()),
       );
     } on FirebaseAuthException catch (e) {
       String message = 'An error occurred';

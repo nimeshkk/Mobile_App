@@ -2,15 +2,15 @@ import 'package:app/components/BottomTab.dart';
 import 'package:flutter/material.dart';
 
 class Report_disater extends StatelessWidget {
-  const Report_disater({Key? key}) : super(key: key);
+  const Report_disater({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFECF0F1),
+      backgroundColor: const Color(0xFFECF0F1),
       appBar: AppBar(
-        title: Text('Report a Disaster'),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        title: const Text('Report a Disaster'),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Column(
         children: <Widget>[
@@ -27,28 +27,28 @@ class Report_disater extends StatelessWidget {
                   imagePath: 'assets/B.png',
                   cardColor: Colors.white,
                   icon: Icons.warning_rounded,
-                  iconColor: Color(0xFFE74C3C),
+                  iconColor: const Color(0xFFE74C3C),
                 ),
                 buildCard(
                   title: 'Flood',
                   imagePath: 'assets/B.png',
                   cardColor: Colors.white,
                   icon: Icons.warning_rounded,
-                  iconColor: Color(0xFFE74C3C),
+                  iconColor: const Color(0xFFE74C3C),
                 ),
                 buildCard(
                   title: 'Earthquake',
                   imagePath: 'assets/B.png',
                   cardColor: Colors.white,
                   icon: Icons.warning_rounded,
-                  iconColor: Color(0xFFE74C3C),
+                  iconColor: const Color(0xFFE74C3C),
                 ),
                 buildCard(
                   title: 'Tornado',
                   imagePath: 'assets/B.png',
                   cardColor: Colors.white,
                   icon: Icons.warning_rounded,
-                  iconColor: Color(0xFFE74C3C),
+                  iconColor: const Color(0xFFE74C3C),
                 ),
               ],
             ),
@@ -87,7 +87,7 @@ class Report_disater extends StatelessWidget {
           const SizedBox(height: 20.0),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.w600,
               color: Color(0xFF2C3E50),

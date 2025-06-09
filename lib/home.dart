@@ -2,7 +2,11 @@ import 'package:app/components/BottomTab.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+
+
 class MyHomePage extends StatefulWidget {
+  static var page;
+
   const MyHomePage({super.key});
 
   @override
@@ -71,11 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
             }).toList(),
           ),
           const SizedBox(height: 30.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
               children: [
-                const Text(
+                Text(
                   'Emergency Services',
                   style: TextStyle(
                     fontSize: 22,
@@ -99,35 +103,35 @@ class _MyHomePageState extends State<MyHomePage> {
                   imagePath: 'assets/B.png',
                   cardColor: Colors.white,
                   icon: Icons.warning_rounded,
-                  iconColor: Color(0xFFE74C3C),
+                  iconColor: const Color(0xFFE74C3C),
                 ),
                 buildCard(
                   title: 'Emergency Info',
                   imagePath: 'assets/B.png',
                   cardColor: Colors.white,
                   icon: Icons.info_rounded,
-                  iconColor: Color(0xFF3498DB),
+                  iconColor: const Color(0xFF3498DB),
                 ),
                 buildCard(
                   title: 'Shelter Locator',
                   imagePath: 'assets/B.png',
                   cardColor: Colors.white,
                   icon: Icons.home_rounded,
-                  iconColor: Color(0xFF27AE60),
+                  iconColor: const Color(0xFF27AE60),
                 ),
                 buildCard(
                   title: 'First Aid Guide',
                   imagePath: 'assets/B.png',
                   cardColor: Colors.white,
                   icon: Icons.medical_services_rounded,
-                  iconColor: Color(0xFFF39C12),
+                  iconColor: const Color(0xFFF39C12),
                 ),
               ],
             ),
           ),
         ],
       ),
-      bottomNavigationBar: BottomTab(), 
+      bottomNavigationBar: const BottomTab(), 
     );
   }
 

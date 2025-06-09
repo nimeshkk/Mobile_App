@@ -41,6 +41,9 @@ dependencies:
   carousel_slider: ^5.0.0
   firebase_messaging: ^14.9.4
   flutter_local_notifications: ^17.2.4
+  auto_route: ^9.2.0
+  auto_route_generator: ^9.0.0
+  build_runner: ^2.4.14
 
 
 dev_dependencies:
