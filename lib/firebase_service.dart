@@ -42,7 +42,6 @@ class FirebaseService {
       // Compress image if too large (keep under 1MB for Firestore)
       String base64Image;
       if (imageBytes.length > 800000) { // ~800KB limit
-        // You can add image compression here if needed
         print('Warning: Image is large. Consider compressing.');
       }
       
@@ -103,28 +102,52 @@ class FirebaseService {
     }
   }
 
-  // Get all approved reports
+  // Get all approved reports (simplified query - no ordering initially)
   static Stream<List<DisasterReport>> getApprovedReports() {
     return _firestore
         .collection('disaster_reports')
         .where('status', isEqualTo: 'approved')
-        .orderBy('timestamp', descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => DisasterReport.fromMap(doc.data()))
-            .toList());
+        .map((snapshot) {
+          var reports = snapshot.docs
+              .map((doc) => DisasterReport.fromMap(doc.data()))
+              .toList();
+          // Sort in memory instead of using Firestore ordering
+          reports.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+          return reports;
+        });
   }
 
-  // Get pending reports for admin
+  // Get pending reports for admin (simplified query)
   static Stream<List<DisasterReport>> getPendingReports() {
     return _firestore
         .collection('disaster_reports')
         .where('status', isEqualTo: 'pending')
-        .orderBy('timestamp', descending: true)
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => DisasterReport.fromMap(doc.data()))
-            .toList());
+        .map((snapshot) {
+          var reports = snapshot.docs
+              .map((doc) => DisasterReport.fromMap(doc.data()))
+              .toList();
+          // Sort in memory instead of using Firestore ordering
+          reports.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+          return reports;
+        });
+  }
+
+  // Get rejected reports for admin (simplified query)
+  static Stream<List<DisasterReport>> getRejectedReports() {
+    return _firestore
+        .collection('disaster_reports')
+        .where('status', isEqualTo: 'rejected')
+        .snapshots()
+        .map((snapshot) {
+          var reports = snapshot.docs
+              .map((doc) => DisasterReport.fromMap(doc.data()))
+              .toList();
+          // Sort in memory instead of using Firestore ordering
+          reports.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+          return reports;
+        });
   }
 
   // Update report status (admin function)

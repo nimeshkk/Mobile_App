@@ -1,6 +1,7 @@
 import 'package:app/components/BottomTab.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 
@@ -31,16 +32,83 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.menu,
-            color: Color(0xFF2C3E50),
-            size: 28,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(
+              Icons.menu,
+              color: Color(0xFF2C3E50),
+              size: 28,
+            ),
+            onPressed: () => Scaffold.of(context).openDrawer(),
           ),
-          onPressed: () {
-            // Handle menu button press
-          },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.notifications,
+              color: Color(0xFF2C3E50),
+            ),
+            onPressed: () {
+              // Handle notifications
+            },
+          ),
+          PopupMenuButton(
+            icon: const Icon(
+              Icons.more_vert,
+              color: Color(0xFF2C3E50),
+            ),
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'profile',
+                child: Row(
+                  children: [
+                    Icon(Icons.person),
+                    SizedBox(width: 8),
+                    Text('Profile'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'reports',
+                child: Row(
+                  children: [
+                    Icon(Icons.list),
+                    SizedBox(width: 8),
+                    Text('View Reports'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'logout',
+                child: Row(
+                  children: [
+                    Icon(Icons.logout),
+                    SizedBox(width: 8),
+                    Text('Logout'),
+                  ],
+                ),
+              ),
+            ],
+            onSelected: (value) async {
+              switch (value) {
+                case 'profile':
+                  // Navigate to profile
+                  break;
+                case 'reports':
+                  Navigator.pushNamed(context, '/approved-reports');
+                  break;
+                case 'logout':
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/welcome',
+                    (route) => false,
+                  );
+                  break;
+              }
+            },
+          ),
+        ],
       ),
       backgroundColor: const Color(0xFFFFFFFF),
       body: Column(
@@ -132,6 +200,62 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       bottomNavigationBar: const BottomTab(), 
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFF2C3E50),
+              ),
+              child: Text(
+                'Disaster Management',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.warning),
+              title: const Text('Report Disaster'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/report');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.list),
+              title: const Text('View Reports'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/approved-reports');
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
+              onTap: () async {
+                Navigator.pop(context);
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/welcome',
+                  (route) => false,
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 

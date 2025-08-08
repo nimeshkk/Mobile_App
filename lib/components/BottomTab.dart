@@ -1,7 +1,8 @@
 import 'package:app/home.dart';
 import 'package:app/report_disaster.dart';
+import 'package:app/public_report_view.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 class BottomTab extends StatefulWidget {
   final int initialIndex;
@@ -33,26 +34,68 @@ class _BottomTabState extends State<BottomTab> {
       // Navigation logic based on selected index
       switch (index) {
         case 0:
-          if (context.widget is! MyHomePage) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const MyHomePage()),
-            );
-          }
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/home',
+            (route) => false,
+          );
           break;
         case 1:
-          if (context.widget is! Report_disater) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const Report_disater()),
-            );
-          }
+          Navigator.pushNamed(context, '/report');
           break;
         case 2:
-          // Profile page navigation would go here
+          Navigator.pushNamed(context, '/approved-reports');
+          break;
+        case 3:
+          _showProfileMenu();
           break;
       }
     }
+  }
+
+  void _showProfileMenu() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.person),
+                title: const Text('Profile'),
+                onTap: () {
+                  Navigator.pop(context);
+                  // Navigate to profile page
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.settings),
+                title: const Text('Settings'),
+                onTap: () {
+                  Navigator.pop(context);
+                  // Navigate to settings
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.logout),
+                title: const Text('Logout'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/welcome',
+                    (route) => false,
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -61,8 +104,8 @@ class _BottomTabState extends State<BottomTab> {
       currentIndex: _currentIndex,
       onTap: _onItemTapped,
       type: BottomNavigationBarType.fixed,
-      selectedFontSize: 14,
-      unselectedFontSize: 14,
+      selectedFontSize: 12,
+      unselectedFontSize: 12,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
@@ -71,6 +114,10 @@ class _BottomTabState extends State<BottomTab> {
         BottomNavigationBarItem(
           icon: Icon(Icons.warning_rounded),
           label: 'Report',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.list),
+          label: 'Reports',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
