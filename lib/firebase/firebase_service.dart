@@ -5,13 +5,14 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'disaster_report.dart'; 
+import 'package:image/image.dart' as img; // Add this package
+import '../../disaster_report.dart'; 
 
 class FirebaseService {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Submit a new disaster report with image stored in Firestore (FREE)
+  // Submit a new disaster report with compressed image
   static Future<String?> submitReport({
     required String title,
     required String description,
@@ -28,7 +29,6 @@ class FirebaseService {
         return null;
       }
 
-      // Check if file exists
       if (!await imageFile.exists()) {
         print('Image file does not exist');
         return null;
@@ -36,20 +36,23 @@ class FirebaseService {
 
       print('Processing image...');
       
-      // Convert image to base64 string (completely free)
-      final Uint8List imageBytes = await imageFile.readAsBytes();
-      
-      // Compress image if too large (keep under 1MB for Firestore)
-      String base64Image;
-      if (imageBytes.length > 800000) { // ~800KB limit
-        print('Warning: Image is large. Consider compressing.');
+      // Compress the image
+      final compressedImageBytes = await _compressImage(imageFile);
+      if (compressedImageBytes == null) {
+        print('Failed to compress image');
+        return null;
       }
       
-      base64Image = base64Encode(imageBytes);
-      
-      print('Image processed successfully');
+      final base64Image = base64Encode(compressedImageBytes);
+      print('Image compressed successfully. Size: ${compressedImageBytes.length} bytes');
 
-      // Create report document with embedded image
+      // Check if still too large (leave some buffer for other document data)
+      if (compressedImageBytes.length > 800000) { // 800KB limit
+        print('Error: Compressed image is still too large');
+        return null;
+      }
+
+      // Create report document
       final reportId = _firestore.collection('disaster_reports').doc().id;
       final report = DisasterReport(
         id: reportId,
@@ -57,7 +60,7 @@ class FirebaseService {
         description: description,
         location: location,
         timestamp: DateTime.now(),
-        imageUrl: base64Image, // Store base64 instead of URL
+        imageUrl: base64Image,
         userId: user.uid,
         userEmail: user.email ?? '',
         status: 'pending',
@@ -66,7 +69,6 @@ class FirebaseService {
         disasterType: disasterType,
       );
 
-      // Save to Firestore (completely free up to quotas)
       await _firestore.collection('disaster_reports').doc(reportId).set(report.toMap());
       
       print('Report saved successfully with ID: $reportId');
@@ -76,6 +78,53 @@ class FirebaseService {
       return null;
     } catch (e) {
       print('Error submitting report: $e');
+      return null;
+    }
+  }
+
+  // Compress image to reduce size
+  static Future<Uint8List?> _compressImage(File imageFile) async {
+    try {
+      // Read the image
+      final imageBytes = await imageFile.readAsBytes();
+      
+      // Decode the image
+      final image = img.decodeImage(imageBytes);
+      if (image == null) return null;
+
+      // Calculate new dimensions (max 800x600 while maintaining aspect ratio)
+      int maxWidth = 800;
+      int maxHeight = 600;
+      
+      int newWidth = image.width;
+      int newHeight = image.height;
+      
+      if (newWidth > maxWidth || newHeight > maxHeight) {
+        double widthRatio = maxWidth / newWidth;
+        double heightRatio = maxHeight / newHeight;
+        double ratio = widthRatio < heightRatio ? widthRatio : heightRatio;
+        
+        newWidth = (newWidth * ratio).round();
+        newHeight = (newHeight * ratio).round();
+      }
+
+      // Resize the image
+      final resizedImage = img.copyResize(
+        image,
+        width: newWidth,
+        height: newHeight,
+        interpolation: img.Interpolation.linear,
+      );
+
+      // Compress as JPEG with quality 85
+      final compressedBytes = img.encodeJpg(resizedImage, quality: 85);
+      
+      print('Original size: ${imageBytes.length} bytes');
+      print('Compressed size: ${compressedBytes.length} bytes');
+      
+      return Uint8List.fromList(compressedBytes);
+    } catch (e) {
+      print('Error compressing image: $e');
       return null;
     }
   }

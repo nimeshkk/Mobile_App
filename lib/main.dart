@@ -9,7 +9,7 @@ import 'package:app/admin_setup.dart';
 import 'package:app/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'firebase/firebase_options.dart';
 import 'package:app/report_disaster.dart';
 import 'package:app/ReportForm.dart';
 

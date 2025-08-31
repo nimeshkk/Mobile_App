@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:io';
-import 'firebase_service.dart';
+import 'firebase/firebase_service.dart';
 
 class ReportForm extends StatefulWidget {
   final String disasterType;
@@ -121,15 +121,26 @@ class _ReportFormState extends State<ReportForm> {
 
       if (reportId != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Report submitted successfully! Awaiting admin approval.')),
+          const SnackBar(
+            content: Text('Report submitted successfully! Awaiting admin approval.'),
+            backgroundColor: Colors.green,
+          ),
         );
         Navigator.pop(context);
       } else {
-        throw Exception('Failed to submit report');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to submit report. Image might be too large. Try a smaller image.'),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
+        SnackBar(
+          content: Text('Error: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
       );
     } finally {
       setState(() {

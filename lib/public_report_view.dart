@@ -1,8 +1,8 @@
 import 'package:app/disaster_report.dart';
-import 'package:app/firebase_service.dart';
+import 'package:app/firebase/firebase_service.dart';
 import 'package:flutter/material.dart';
 import 'disaster_report.dart';
-import 'firebase_service.dart';
+import 'firebase/firebase_service.dart';
 
 class ApprovedReports extends StatelessWidget {
   const ApprovedReports({super.key});
