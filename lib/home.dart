@@ -110,32 +110,49 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Column(
         children: [
           const SizedBox(height: 20.0),
           CarouselSlider(
             options: CarouselOptions(
-              height: 220.0,
+              height: 220.0, 
               autoPlay: true,
               autoPlayInterval: const Duration(seconds: 3),
               enlargeCenterPage: true,
-              enlargeFactor: 0.3,
-              viewportFraction: 0.85,
+              enlargeFactor: 0.15,
+              viewportFraction: 0.6, 
+              enableInfiniteScroll: true,
+              scrollDirection: Axis.horizontal,
             ),
             items: [
-              'assets/B.png',
-              'assets/B.png',
-              'assets/B.png',
+              'assets/disaster1.png',
+              'assets/disaster2.png',
+              'assets/disaster3.png',
             ].map((i) {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
-                    width: screenWidth,
-                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
+                          blurRadius: 8,
+                          spreadRadius: 2,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(i, fit: BoxFit.cover),
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.asset(
+                        i, 
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      ),
                     ),
                   );
                 },
@@ -172,13 +189,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   cardColor: Colors.white,
                   icon: Icons.warning_rounded,
                   iconColor: const Color(0xFFE74C3C),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/report');
+                  },
                 ),
                 buildCard(
-                  title: 'Emergency Info',
+                  title: 'View Disaster',
                   imagePath: 'assets/B.png',
                   cardColor: Colors.white,
                   icon: Icons.info_rounded,
                   iconColor: const Color(0xFF3498DB),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/approved-reports');
+                  },
                 ),
                 buildCard(
                   title: 'Shelter Locator',
@@ -265,6 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
     required Color cardColor,
     required IconData icon,
     required Color iconColor,
+    VoidCallback? onTap,
   }) {
     return Container(
       decoration: BoxDecoration(
@@ -286,9 +310,7 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 0,
         child: InkWell(
           borderRadius: BorderRadius.circular(20.0),
-          onTap: () {
-            // Handle card tap
-          },
+          onTap: onTap, // Use the passed onTap callback
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(

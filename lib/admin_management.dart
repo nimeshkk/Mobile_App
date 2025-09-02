@@ -39,7 +39,7 @@ class _AdminManagementState extends State<AdminManagement> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin Management'),
-        backgroundColor: Colors.orange.shade700,
+        backgroundColor: const Color.fromARGB(255, 17, 147, 156),
         foregroundColor: Colors.white,
         actions: [
           IconButton(
@@ -55,57 +55,7 @@ class _AdminManagementState extends State<AdminManagement> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Default Admin Info Card
-            Card(
-              color: Colors.blue.shade50,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.admin_panel_settings, color: Colors.blue.shade700),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Default Admin Account',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue.shade700,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Email: ${AdminSetup.defaultAdminEmail}',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Password: ${AdminSetup.defaultAdminPassword}',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Text(
-                        'DEFAULT',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+         
             
             const SizedBox(height: 24),
             
@@ -123,7 +73,7 @@ class _AdminManagementState extends State<AdminManagement> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.orange.shade700,
+                          color: const Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -177,7 +127,7 @@ class _AdminManagementState extends State<AdminManagement> {
                               : const Icon(Icons.person_add),
                           label: const Text('Create Admin Account'),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange.shade700,
+                            backgroundColor: const Color.fromARGB(255, 17, 147, 156),
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
@@ -218,54 +168,6 @@ class _AdminManagementState extends State<AdminManagement> {
             
             const SizedBox(height: 24),
             
-            // Existing Admins List
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Existing Admin Accounts',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green.shade700,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    StreamBuilder<List<Map<String, dynamic>>>(
-                      stream: AdminSetup.getAllAdmins(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const Center(child: CircularProgressIndicator());
-                        }
-
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        }
-
-                        final admins = snapshot.data ?? [];
-
-                        if (admins.isEmpty) {
-                          return const Text('No admin accounts found');
-                        }
-
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: admins.length,
-                          itemBuilder: (context, index) {
-                            final admin = admins[index];
-                            return _buildAdminCard(admin);
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ],
         ),
       ),

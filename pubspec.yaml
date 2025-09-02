@@ -77,8 +77,9 @@ flutter:
   assets:
     - assets/B.png
     - assets/google.png
-    
-    
+    - assets/disaster1.png
+    - assets/disaster2.png
+    - assets/disaster3.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -37,16 +37,16 @@ class _AdminPanelState extends State<AdminPanel> with SingleTickerProviderStateM
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin Panel'),
-        backgroundColor: Colors.red.shade700,
+        backgroundColor: const Color.fromARGB(255, 32, 179, 152),
         foregroundColor: Colors.white,
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.white,
           labelColor: Colors.white,
           tabs: const [
-            Tab(text: 'Pending Reports', icon: Icon(Icons.pending)),
-            Tab(text: 'Approved Reports', icon: Icon(Icons.check_circle)),
-            Tab(text: 'Rejected Reports', icon: Icon(Icons.cancel)),
+            Tab(text: 'Pending', icon: Icon(Icons.pending)),
+            Tab(text: 'Approved', icon: Icon(Icons.check_circle)),
+            Tab(text: 'Rejected ', icon: Icon(Icons.cancel)),
           ],
         ),
         actions: [

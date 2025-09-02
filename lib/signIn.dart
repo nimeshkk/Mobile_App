@@ -180,7 +180,7 @@ class _SignInPageState extends State<SignInPage> with SingleTickerProviderStateM
                             ],
                           ),
                           child: Image.asset(
-                            'assets/B.png',
+                            'assets/disaster1.png',
                             width: 100,
                             height: 100,
                           ),
