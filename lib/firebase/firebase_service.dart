@@ -211,4 +211,15 @@ class FirebaseService {
       return false;
     }
   }
+
+  // Delete a report (admin function)
+  static Future<bool> deleteReport(String reportId) async {
+    try {
+      await _firestore.collection('disaster_reports').doc(reportId).delete();
+      return true;
+    } catch (e) {
+      print('Error deleting report: $e');
+      return false;
+    }
+  }
 }

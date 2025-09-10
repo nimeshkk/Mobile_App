@@ -194,44 +194,68 @@ class _AdminPanelState extends State<AdminPanel> with SingleTickerProviderStateM
                     'Coordinates: ${report.latitude!.toStringAsFixed(6)}, ${report.longitude!.toStringAsFixed(6)}',
                     style: TextStyle(color: Colors.grey[600]),
                   ),
-                const SizedBox(height: 16),
-                if (currentStatus == 'pending')
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
+                const SizedBox(height: 14),
+                // Action buttons row
+                Wrap(
+                  spacing: 8.0,
+                  runSpacing: 8.0,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    if (currentStatus == 'pending') ...[
                       ElevatedButton.icon(
                         onPressed: () => _updateReportStatus(report.id, 'approved'),
-                        icon: const Icon(Icons.check),
-                        label: const Text('Approve'),
+                        icon: const Icon(Icons.check, size: 16),
+                        label: const Text('Approve', style: TextStyle(fontSize: 12)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
                           foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          minimumSize: const Size(80, 36),
                         ),
                       ),
                       ElevatedButton.icon(
                         onPressed: () => _updateReportStatus(report.id, 'rejected'),
-                        icon: const Icon(Icons.close),
-                        label: const Text('Reject'),
+                        icon: const Icon(Icons.close, size: 16),
+                        label: const Text('Reject', style: TextStyle(fontSize: 12)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.red,
                           foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          minimumSize: const Size(80, 36),
                         ),
                       ),
                     ],
-                  ),
-                if (currentStatus != 'pending')
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: currentStatus == 'approved' ? Colors.green : Colors.red,
-                      borderRadius: BorderRadius.circular(20),
+                    // Delete button for all statuses
+                    ElevatedButton.icon(
+                      onPressed: () => _showDeleteConfirmDialog(report),
+                      icon: const Icon(Icons.delete, size: 16),
+                      label: const Text('Delete', style: TextStyle(fontSize: 12)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red.shade700,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        minimumSize: const Size(80, 36),
+                      ),
                     ),
-                    child: Text(
-                      currentStatus.toUpperCase(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
+                  ],
+                ),
+                if (currentStatus != 'pending')
+                  const SizedBox(height: 8),
+                if (currentStatus != 'pending')
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: currentStatus == 'approved' ? Colors.green : Colors.red,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        currentStatus.toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ),
@@ -266,6 +290,81 @@ class _AdminPanelState extends State<AdminPanel> with SingleTickerProviderStateM
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Failed to update report status'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  void _showDeleteConfirmDialog(DisasterReport report) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Report'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Are you sure you want to delete this disaster report?'),
+              const SizedBox(height: 8),
+              Text(
+                'Title: ${report.title}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text('Type: ${report.disasterType}'),
+              Text('Location: ${report.location}'),
+              const SizedBox(height: 8),
+              const Text(
+                'This action cannot be undone.',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                await _deleteReport(report.id);
+              },
+              style: TextButton.styleFrom(foregroundColor: Colors.red),
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _deleteReport(String reportId) async {
+    try {
+      final success = await FirebaseService.deleteReport(reportId);
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Report deleted successfully'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to delete report'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error deleting report: ${e.toString()}'),
           backgroundColor: Colors.red,
         ),
       );
