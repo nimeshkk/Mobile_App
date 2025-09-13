@@ -1,5 +1,6 @@
 import 'package:app/notification_service.dart';
 import 'package:app/signIn.dart';
+import 'package:app/weather_page.dart';
 import 'package:app/welcome.dart';
 import 'package:app/home.dart';
 import 'package:app/admin_panel.dart';
@@ -12,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase/firebase_options.dart';
 import 'package:app/report_disaster.dart';
 import 'package:app/ReportForm.dart';
+import 'package:app/about.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,6 +61,8 @@ class MyApp extends StatelessWidget {
         '/admin': (context) => const AdminPanel(),
         '/admin-management': (context) => const AdminManagement(),
         '/approved-reports': (context) => const ApprovedReports(),
+        '/weather': (context) => const WeatherPage(),
+        '/about': (context) => const AboutPage(),
       },
       // Handle unknown routes
       onUnknownRoute: (settings) {

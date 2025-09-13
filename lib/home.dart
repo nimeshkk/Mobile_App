@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
-
 class MyHomePage extends StatefulWidget {
   static var page;
 
@@ -116,12 +114,12 @@ class _MyHomePageState extends State<MyHomePage> {
           const SizedBox(height: 20.0),
           CarouselSlider(
             options: CarouselOptions(
-              height: 220.0, 
+              height: 220.0,
               autoPlay: true,
               autoPlayInterval: const Duration(seconds: 3),
               enlargeCenterPage: true,
               enlargeFactor: 0.15,
-              viewportFraction: 0.6, 
+              viewportFraction: 0.6,
               enableInfiniteScroll: true,
               scrollDirection: Axis.horizontal,
             ),
@@ -139,7 +137,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
+                          color: const Color.fromARGB(255, 255, 255, 255)
+                              .withOpacity(0.1),
                           blurRadius: 8,
                           spreadRadius: 2,
                           offset: const Offset(0, 4),
@@ -149,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
                       child: Image.asset(
-                        i, 
+                        i,
                         fit: BoxFit.cover,
                         width: double.infinity,
                       ),
@@ -197,39 +196,45 @@ class _MyHomePageState extends State<MyHomePage> {
                   title: 'View Disaster',
                   imagePath: 'assets/B.png',
                   cardColor: Colors.white,
-                  icon: Icons.info_rounded,
+                  icon: Icons.list_alt_rounded,
                   iconColor: const Color(0xFF3498DB),
                   onTap: () {
                     Navigator.pushNamed(context, '/approved-reports');
                   },
                 ),
                 buildCard(
-                  title: 'Shelter Locator',
+                  title: 'About',
                   imagePath: 'assets/B.png',
                   cardColor: Colors.white,
-                  icon: Icons.home_rounded,
+                  icon: Icons.info_outline_rounded,
                   iconColor: const Color(0xFF27AE60),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/about');
+                  },
                 ),
                 buildCard(
-                  title: 'First Aid Guide',
+                  title: 'Weather Updates',
                   imagePath: 'assets/B.png',
                   cardColor: Colors.white,
-                  icon: Icons.medical_services_rounded,
+                  icon: Icons.wb_sunny_rounded,
                   iconColor: const Color(0xFFF39C12),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/weather');
+                  },
                 ),
               ],
             ),
           ),
         ],
       ),
-      bottomNavigationBar: const BottomTab(), 
+      bottomNavigationBar: const BottomTab(),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Color(0xFF2C3E50),
+                color: Color.fromARGB(255, 45, 125, 205),
               ),
               child: Text(
                 'Disaster Management',
