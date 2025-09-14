@@ -68,12 +68,12 @@ class _AdminManagementState extends State<AdminManagement> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Create New Admin Account',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 0, 0, 0),
+                          color: Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -185,7 +185,7 @@ class _AdminManagementState extends State<AdminManagement> {
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: isDefault ? Colors.blue : Colors.green,
-          child: Icon(
+          child: const Icon(
             Icons.admin_panel_settings,
             color: Colors.white,
           ),

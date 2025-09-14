@@ -292,7 +292,7 @@ class _WeatherPageState extends State<WeatherPage> {
         children: [
           Row(
             children: [
-              Icon(Icons.location_on, color: Colors.white, size: 20),
+              const Icon(Icons.location_on, color: Colors.white, size: 20),
               const SizedBox(width: 8),
               Text(
                 cityName,
@@ -312,7 +312,7 @@ class _WeatherPageState extends State<WeatherPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${temp}°C',
+                    '$temp°C',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 48,
@@ -320,7 +320,7 @@ class _WeatherPageState extends State<WeatherPage> {
                     ),
                   ),
                   Text(
-                    'Feels like ${feelsLike}°C',
+                    'Feels like $feelsLike°C',
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 16,
@@ -365,7 +365,7 @@ class _WeatherPageState extends State<WeatherPage> {
               _buildWeatherDetail(
                 icon: Icons.water_drop,
                 label: 'Humidity',
-                value: '${humidity}%',
+                value: '$humidity%',
               ),
               _buildWeatherDetail(
                 icon: Icons.air,
@@ -564,7 +564,7 @@ class _WeatherPageState extends State<WeatherPage> {
                         },
                       ),
                       Text(
-                        '${temp}°',
+                        '$temp°',
                         style: TextStyle(
                           color: Colors.grey.shade800,
                           fontSize: 16,
@@ -685,7 +685,7 @@ class _WeatherPageState extends State<WeatherPage> {
                     ),
                   ),
                   Text(
-                    '${minTemp}° / ${maxTemp}°',
+                    '$minTemp° / $maxTemp°',
                     style: TextStyle(
                       color: Colors.grey.shade800,
                       fontSize: 16,

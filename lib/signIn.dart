@@ -1,10 +1,8 @@
-import 'package:app/home.dart';
 import 'package:app/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app/welcome.dart';
 import 'user_role_service.dart';
-import 'admin_panel.dart';
 
 
 class SignInPage extends StatefulWidget {
